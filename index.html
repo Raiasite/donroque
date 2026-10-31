@@ -516,6 +516,28 @@
     fill: #fff;
   }
 
+
+  /* ── agenda (demo) ─────────────────── */
+  .demo-badge{display:inline-block;margin-inline-start:.6rem;padding:.15rem .55rem;border:1px solid var(--gold);border-radius:999px;font-size:.625rem;letter-spacing:.12em;color:var(--gold);vertical-align:middle}
+  .agenda{margin-block-start:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
+  .agenda-step{margin-block-end:1.5rem}
+  .agenda-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-block-end:.6rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{font:inherit;font-size:.875rem;font-weight:600;min-height:44px;padding:.5rem .9rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);cursor:pointer;transition:border-color .15s,background .15s}
+  .chip:hover:not(:disabled){border-color:var(--gold)}
+  .chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1a1a1a}
+  .chip:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+  .chip small{display:block;font-weight:500;font-size:.75rem;opacity:.8}
+  .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:.5rem}
+  .agenda-hint{font-size:.875rem;color:var(--text-muted)}
+  .agenda-summary{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);padding-top:1.25rem}
+  .agenda-summary p{font-size:.9375rem;color:var(--text)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .agenda-done{text-align:center;padding:1rem 0}
+  .agenda-done h3{font-size:1.6rem;color:var(--text);margin-block-end:.5rem}
+  .agenda-done p{color:var(--text-muted);max-width:46ch;margin:0 auto 1.25rem}
+  .agenda-done .link-btn{font:inherit;font-size:.875rem;background:none;border:0;color:var(--text-muted);text-decoration:underline;cursor:pointer;margin-top:1rem;min-height:44px}
+
   /* ── mobile ────────────────────────── */
   @media (max-width: 680px) {
     .nav-toggle { display: block; }
@@ -586,6 +608,7 @@
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
       <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#agenda">Reservar</a></li>
       <li><a href="#galeria">Galería</a></li>
       <li><a href="#horarios">Horarios</a></li>
     </ul>
@@ -598,7 +621,7 @@
     <p class="hero-eyebrow">Barbería · Parque del Plata</p>
     <h1>Don Roque</h1>
     <p class="hero-tagline">Cortes con oficio desde 2008</p>
-    <a href="https://wa.me/59898271221?text=Hola%2C%20vi%20la%20demo%20de%20Don%20Roque%20y%20quiero%20una%20p%C3%A1gina%20as%C3%AD" class="btn btn--gold" target="_blank" rel="noopener">
+    <a href="#agenda" class="btn btn--gold">
       Reservá tu turno
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
     </a>
@@ -668,6 +691,49 @@
   </div>
 </section>
 
+
+<!-- ═══ AGENDA (DEMO) ═══ -->
+<section id="agenda" class="section">
+  <div class="wrap">
+    <p class="section-eyebrow">Reservas online <span class="demo-badge">DEMO</span></p>
+    <h2 class="section-title">Agendá tu turno</h2>
+    <p class="section-intro">Elegí el servicio, el día y el horario. Es un ejemplo de cómo funciona una agenda online: no se hace ninguna reserva real.</p>
+
+    <div class="agenda" id="agenda-form">
+      <div class="agenda-step">
+        <p class="agenda-label">1 · Servicio</p>
+        <div class="chips" id="ag-services">
+          <button type="button" class="chip" aria-pressed="false" data-v="Corte clásico">Corte clásico<small>$ 550 · 30 min</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Corte + barba">Corte + barba<small>$ 750 · 45 min</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Afeitado a navaja">Afeitado a navaja<small>$ 400 · 30 min</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Perfilado de barba">Perfilado de barba<small>$ 350 · 20 min</small></button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Corte niño">Corte niño<small>$ 400 · 30 min</small></button>
+        </div>
+      </div>
+      <div class="agenda-step">
+        <p class="agenda-label">2 · Día</p>
+        <div class="chips" id="ag-days"></div>
+      </div>
+      <div class="agenda-step">
+        <p class="agenda-label">3 · Horario</p>
+        <div class="slots" id="ag-slots"><p class="agenda-hint">Elegí un día para ver los horarios.</p></div>
+      </div>
+      <div class="agenda-summary">
+        <p id="ag-summary">Todavía no elegiste turno.</p>
+        <button type="button" class="btn btn--gold" id="ag-confirm" disabled>Confirmar turno</button>
+      </div>
+    </div>
+
+    <div class="agenda agenda-done" id="agenda-done" hidden>
+      <h3>¡Así se vería tu reserva!</h3>
+      <p id="ag-done-text"></p>
+      <p>Esto es una demo: no se agendó ningún turno. En una barbería real, el turno queda guardado y el cliente recibe la confirmación.</p>
+      <a href="https://wa.me/59898271221?text=Hola%2C%20vi%20la%20demo%20de%20Don%20Roque%20y%20quiero%20una%20p%C3%A1gina%20as%C3%AD" class="btn btn--gold" target="_blank" rel="noopener">Quiero una página así</a>
+      <br><button type="button" class="link-btn" id="ag-reset">Probar de nuevo</button>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ GALERÍA ═══ -->
 <section id="galeria" class="section">
   <div class="wrap">
@@ -733,7 +799,7 @@
       <p class="footer-brand">Don Roque Barbería</p>
       <p>Parque del Plata, Canelones · 099 000 000</p>
     </div>
-    <p class="footer-right">Sitio creado por RaIA</p>
+    <p class="footer-right">Sitio creado por <a href="https://raiaweb.netlify.app" target="_blank" rel="noopener" style="text-decoration:underline">RaIA</a></p>
   </div>
 </footer>
 
@@ -761,6 +827,52 @@
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // ── Agenda demo (no reserva nada) ──
+  (function(){
+    const $=id=>document.getElementById(id);
+    const st={service:null,day:null,time:null};
+    const D=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    const M=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    function press(group,btn){group.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));}
+    function update(){
+      const ok=st.service&&st.day&&st.time;
+      $('ag-confirm').disabled=!ok;
+      $('ag-summary').textContent=ok?`${st.service} · ${st.day.label} · ${st.time} h`:'Todavía no elegiste turno.';
+    }
+    $('ag-services').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;st.service=b.dataset.v;press($('ag-services'),b);update();});
+    // próximos 6 días hábiles (sin domingos)
+    const days=[];const d=new Date();d.setHours(0,0,0,0);
+    while(days.length<6){d.setDate(d.getDate()+1);if(d.getDay()!==0)days.push(new Date(d));}
+    days.forEach(x=>{
+      const b=document.createElement('button');b.type='button';b.className='chip';b.setAttribute('aria-pressed','false');
+      b.innerHTML=`${D[x.getDay()]}<small>${x.getDate()} ${M[x.getMonth()]}</small>`;
+      b.addEventListener('click',()=>{st.day={date:x,label:`${D[x.getDay()]} ${x.getDate()} ${M[x.getMonth()]}`};st.time=null;press($('ag-days'),b);renderSlots(x);update();});
+      $('ag-days').appendChild(b);
+    });
+    function renderSlots(x){
+      const box=$('ag-slots');box.innerHTML='';
+      const end=x.getDay()===6?13.5:18.5;let seed=x.getDate()*7+x.getMonth();
+      for(let h=9;h<=end;h+=0.5){
+        seed=(seed*31+11)%97;
+        const t=`${Math.floor(h)}:${h%1?'30':'00'}`;
+        const b=document.createElement('button');b.type='button';b.className='chip';b.setAttribute('aria-pressed','false');b.textContent=t;
+        if(seed%3===0){b.disabled=true;b.setAttribute('aria-label',t+' ocupado');}
+        b.addEventListener('click',()=>{st.time=t;press(box,b);update();});
+        box.appendChild(b);
+      }
+    }
+    $('ag-confirm').addEventListener('click',()=>{
+      $('ag-done-text').textContent=`${st.service} — ${st.day.label} a las ${st.time} h.`;
+      $('agenda-form').hidden=true;$('agenda-done').hidden=false;
+    });
+    $('ag-reset').addEventListener('click',()=>{
+      st.service=st.day=st.time=null;
+      document.querySelectorAll('#agenda .chip').forEach(b=>b.setAttribute('aria-pressed','false'));
+      $('ag-slots').innerHTML='<p class="agenda-hint">Elegí un día para ver los horarios.</p>';
+      update();$('agenda-done').hidden=true;$('agenda-form').hidden=false;
+    });
+  })();
 </script>
 </body>
 </html>
